@@ -15,14 +15,18 @@ exports.list = function(req, res){
 exports.save = function(req, res){
 
   User.create({
-    text: req.body.text,
+    name : req.body.nombre,
+    email : req.body.email,
+    phone : req.body.telefono,
+    date : req.body.fecha,
+    city : req.body.ciudad,
     done: false
   }, function(err, user){
     if(err) {
       res.send(err);
     }
 
-    User.find(function(err, user) {
+    User.find(function(err, users) {
       if(err){
         res.send(err);
       }

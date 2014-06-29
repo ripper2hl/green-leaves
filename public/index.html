@@ -21,7 +21,7 @@
     <h1>Green Leaves</h1>
   </div>
   <form name="registerForm" ng-controller="RegisterCtrl as registerCtrl"
-  ng-submit="addUser(usuario)"
+  ng-submit="registerForm.$valid && addUser(usuario)"
   class="form-horizontal" novalidate>
   <fieldset>
 
@@ -30,7 +30,7 @@
     <label for="nombre" class="col-sm-2 control-label"  >Nombre:</label>
     <div class="col-sm-6" >
       <input type="text" name="nombre" id="nombre" class="form-control"
-      ng-model="usuario.nombre" required />
+      ng-model="usuario.nombre" placeholder="ejemplo" required />
     </div>
   </div>
 
@@ -39,7 +39,7 @@
   <label for="email" class="col-sm-2 control-label" >E-mail:</label>
   <div class="col-sm-6"  >
     <input type="email" name="email" id="email" class="form-control"
-    ng-model="usuario.email" required />
+    ng-model="usuario.email" placeholder="ejemplo@email.com" required />
   </div>
 </div>
 
@@ -49,7 +49,7 @@ ng-class="{ 'has-error': registerForm.telefono.$invalid && registerForm.telefono
 <div class="col-sm-5">
   <input type="text" name="telefono" id="telefono" class="form-control"
   ng-model="usuario.telefono"
-  ng-pattern="/^[0-9|\-|#|\ |\+]+$/" required  />
+  ng-pattern="/^[0-9|\-|#|\ |\+]+$/" placeholder="#12345678" required  />
 </div>
 </div>
 
@@ -60,7 +60,10 @@ ng-class="{ 'has-error': registerForm.fecha.$invalid && registerForm.fecha.$dirt
 <div ng-controller="DatepickerCtrl" class="col-sm-3">
   <p class="input-group">
     <input type="text" name="fecha" id="fecha" class="form-control"
-    ng-model="usuario.fecha" required  datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+    ng-model="usuario.fecha" required  datepicker-popup="{{format}}"
+    ng-model="dt" is-open="opened" min-date="minDate" max-date="'2015-06-22'"
+    datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+    ng-required="true" close-text="Close" placeholder="06-Mar-2012"/>
     <span class="input-group-btn">
       <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
     </span>
@@ -74,22 +77,23 @@ ng-class="{ 'has-error': registerForm.ciudad.$invalid && registerForm.ciudad.$di
 <label for="ciudad" class="col-sm-2 control-label" >Ciudad y Estado:</label>
 <div ng-controller="TypeheadCtrl" class="col-sm-6" >
   <input type="text" name="ciudad" id="ciudad" class="form-control"
-  ng-model="usuario.ciudad" typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-min-length="3" required  />
+  ng-model="usuario.ciudad" typeahead="address for address in getLocation($viewValue)"
+  typeahead-loading="loadingLocations" typeahead-min-length="3"
+  placeholder="Ciudad Apodaca, NL, México" required  />
   <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
 </div>
 </div>
 
-<div>El formulario es valido {{registerForm.$valid}} </div>
-
-<div class="form-group">
+<div class="form-group" ng-controller="ModalCtrl">
   <div class="col-sm-offset-2 col-sm-10 text-center">
-    <input type="submit" value="Enviar" class="btn btn-default " />
+    <input type="submit" value="Enviar" ng-click="registerForm.$invalid && open('sm')" class="btn btn-default " />
   </div>
 </div>
 </fieldset>
 </form>
 
-<div ng-controller="ModalDemoCtrl">
+<!-- Dialogo de validacion -->
+<div ng-controller="ModalCtrl">
 <script type="text/ng-template" id="myModalContent.html">
 <div class="modal-header">
 <h3 class="modal-title">Contacto  </h3>
@@ -100,7 +104,7 @@ ng-class="{ 'has-error': registerForm.ciudad.$invalid && registerForm.ciudad.$di
   datos de contacto:
 </p>
 <ul>
-<li>Faltan datos</li>
+<li>Faltan datos o son datos invalidos</li>
 </ul>
 <p>
   Por favor corrija los errores para continuar.
@@ -110,9 +114,6 @@ ng-class="{ 'has-error': registerForm.ciudad.$invalid && registerForm.ciudad.$di
 <button class="btn btn-primary" ng-click="ok()">Ok</button>
 </div>
 </script>
-
-<button class="btn btn-default" ng-click="open('lg')">Small modal</button>
-<div ng-show="selected">Selection from a modal: {{ selected }}</div>
 </div>
 </body>
 </html>

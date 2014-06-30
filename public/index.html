@@ -16,13 +16,13 @@
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="container">
+<body class="container" ng-controller="ViewCtrl" >
   <div class="jumbotron">
     <h1>Green Leaves</h1>
   </div>
   <form name="registerForm" ng-controller="RegisterCtrl as registerCtrl"
-  ng-submit="registerForm.$valid && addUser(usuario)"
-  class="form-horizontal" novalidate>
+  ng-submit="registerForm.$valid && (changeView(2,usuario) || addUser(usuario))"
+  class="form-horizontal" ng-show="view === 1" novalidate>
   <fieldset>
 
     <div class="form-group"
@@ -91,6 +91,23 @@ ng-class="{ 'has-error': registerForm.ciudad.$invalid && registerForm.ciudad.$di
 </div>
 </fieldset>
 </form>
+
+<div ng-show="view === 2">
+  <p class="text-left" >Estimado/a <strong>{{currentUser.nombre}}</strong>,</p>
+  <p class="text-left">
+    Hemos recibido sus datos y nos pondremos
+    en contacto con usted a la brevedad posible.Enviaremos<br/>
+    un correo con informaciòn a su cuenta:
+    <strong><u>{{currentUser.email}}</u></strong>
+  </p>
+  <p class="text-right">
+    <strong>
+      Atte.<br/>
+      Green leaves<br/>
+    </strong>
+    {{currentUser.ciudad}} a {{currentUser.fecha | date:'dd-MMMM-yyyy'}}
+  </p>
+</div>
 
 <!-- Dialogo de validacion -->
 <div ng-controller="ModalCtrl">

@@ -2,6 +2,17 @@
 
   var app = angular.module('greenLeaves', ['ui.bootstrap']);
 
+  app.controller('ViewCtrl', function ($scope){
+
+    $scope.view = 1;
+    $currentUser = {};
+    $scope.changeView = function (val,currentUser) {
+      $scope.view = val;
+      $scope.currentUser = currentUser;
+    };
+
+  });
+
   app.controller('RegisterCtrl', function($scope,$http){
 
     $scope.usuario = {
@@ -17,9 +28,9 @@
       $scope.usuario = usuario;
       $http.post('/api/users', $scope.usuario).success( function (data) {
         console.log(data);
+        $scope.usuario = {};
       });
     };
-
   });
 
   //Widget Calendario

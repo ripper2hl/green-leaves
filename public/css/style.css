@@ -1,8 +1,6 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
+.jumbotron{
+   background-image : url('/img/leaf.png');
+   background-position: right bottom;
+   background-size: 20%;
+   background-repeat: no-repeat;
 }

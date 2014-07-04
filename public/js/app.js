@@ -2,7 +2,7 @@
 
   var app = angular.module('greenLeaves', ['ui.bootstrap']);
 
-  app.controller('ViewCtrl', function ($scope){
+  app.controller('ViewCtrl', function ($scope, $http){
 
     $scope.view = 1;
     $currentUser = {};
@@ -10,6 +10,14 @@
       $scope.view = val;
       $scope.currentUser = currentUser;
     };
+
+    $scope.users = [];
+    $scope.getUsers = function () {
+      $http.get('/api/users').success( function (data) {
+        $scope.users = data;
+      });
+    };
+
 
   });
 
@@ -31,6 +39,11 @@
         $scope.usuario = {};
       });
     };
+  });
+
+  //Tabla de usuarios
+  app.controller('RegisterTableCtrl', function($scope,$http){
+
   });
 
   //Widget Calendario

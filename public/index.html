@@ -50,7 +50,7 @@ ng-class="{ 'has-error': registerForm.telefono.$invalid && registerForm.telefono
 <div class="col-sm-5">
   <input type="text" name="telefono" id="telefono" class="form-control"
   ng-model="usuario.telefono"
-  ng-pattern="/^[0-9|\-|#|\ |\+]+$/" placeholder="#12345678" required  />
+  ng-pattern="/^[0-9|\-|#|\ |\+]+$/" placeholder="#12345678" maxlength="10" required  />
 </div>
 </div>
 
@@ -80,14 +80,14 @@ ng-class="{ 'has-error': registerForm.ciudad.$invalid && registerForm.ciudad.$di
   <input type="text" name="ciudad" id="ciudad" class="form-control"
   ng-model="usuario.ciudad" typeahead="address for address in getLocation($viewValue)"
   typeahead-loading="loadingLocations" typeahead-min-length="3"
-  placeholder="Ciudad Apodaca, NL, México" required  />
+  placeholder="Ciudad Apodaca, NL, México"  autocomplete="off" required  />
   <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
 </div>
 </div>
 
 <div class="form-group" ng-controller="ModalCtrl">
   <div class="col-sm-offset-2 col-sm-10 text-center">
-    <input type="submit" value="Enviar" ng-click="registerForm.$invalid && open('sm')" class="btn btn-default " />
+    <input type="submit" value="Enviar" ng-click="registerForm.$invalid && open('sm')" class="btn btn-primary btn-lg" />
   </div>
 </div>
 </fieldset>
@@ -108,6 +108,40 @@ ng-class="{ 'has-error': registerForm.ciudad.$invalid && registerForm.ciudad.$di
     </strong>
     {{currentUser.ciudad}} a {{currentUser.fecha | date:'dd-MMMM-yyyy'}}
   </p>
+  <p>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10 text-center">
+        <input type="submit" value="Ver usuarios" class="btn btn-primary btn-lg"
+        ng-click="(changeView(3,currentUser)|| getUsers())" />
+      </div>
+    </div>
+  </p>
+</div>
+
+<div ng-controller="RegisterTableCtrl" ng-show="view === 3">
+  <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Telefono</th>
+          <th>Fecha</th>
+          <th>Ciudad y estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in users" >
+          <td>{{$index + 1}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.phone}}</td>
+          <td>{{user.date | date:'dd-MMMM-yyyy'}}</td>
+          <td>{{user.city}}</td>
+        </tr>
+      </tbody>
+
+  </table>
 </div>
 
 <!-- Dialogo de validacion -->
